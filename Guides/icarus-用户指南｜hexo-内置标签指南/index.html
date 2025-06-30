@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><title>Icarus 用户指南｜Hexo 内置标签指南 - hiiiroko&#039;s Blog</title><link rel="manifest" href="/manifest.json"><meta name="theme-color" content="#f7f7f7"><meta name="application-name" content="hiiiroko&#039;s Blog"><meta name="msapplication-TileImage" content="/img/Seal.png"><meta name="msapplication-TileColor" content="#f7f7f7"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="hiiiroko&#039;s Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="以下内容取自  Hexo 文档 并略有修订。    标签插件与文章标签不同。它们从 Octopress 移植而来，为你快速添加特定内容到文章中提供了一种实用方法。"><meta property="og:type" content="blog"><meta property="og:title" content="Icarus 用户指南｜Hexo 内置标签指南"><meta property="og:url" content="http://example.com/Guides/icarus-%E7%94%A8%E6%88%B7%E6%8C%87%E5%8D%97%EF%BD%9Chexo-%E5%86%85%E7%BD%AE%E6%A0%87%E7%AD%BE%E6%8C%87%E5%8D%97/"><meta property="og:site_name" content="hiiiroko&#039;s Blog"><meta property="og:description" content="以下内容取自  Hexo 文档 并略有修订。    标签插件与文章标签不同。它们从 Octopress 移植而来，为你快速添加特定内容到文章中提供了一种实用方法。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="http://example.com/gallery/covers/vector_landscape_1.svg"><meta property="article:published_time" content="2025-06-24T16:00:00.000Z"><meta property="article:author" content="H1rk"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="http://example.com/gallery/covers/vector_landscape_1.svg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com/Guides/icarus-%E7%94%A8%E6%88%B7%E6%8C%87%E5%8D%97%EF%BD%9Chexo-%E5%86%85%E7%BD%AE%E6%A0%87%E7%AD%BE%E6%8C%87%E5%8D%97/"},"headline":"Icarus 用户指南｜Hexo 内置标签指南","image":[],"datePublished":"2025-06-24T16:00:00.000Z","author":{"@type":"Person","name":"H1rk"},"publisher":{"@type":"Organization","name":"hiiiroko's Blog","logo":{"@type":"ImageObject","url":"http://example.com/img/2H.png"}},"description":"以下内容取自  Hexo 文档 并略有修订。    标签插件与文章标签不同。它们从 Octopress 移植而来，为你快速添加特定内容到文章中提供了一种实用方法。"}</script><link rel="canonical" href="http://example.com/Guides/icarus-%E7%94%A8%E6%88%B7%E6%8C%87%E5%8D%97%EF%BD%9Chexo-%E5%86%85%E7%BD%AE%E6%A0%87%E7%AD%BE%E6%8C%87%E5%8D%97/"><link rel="icon" href="/img/Seal.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link data-pjax rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link data-pjax rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css"><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/2H.png" alt="hiiiroko&#039;s Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2025-06-24T16:00:00.000Z" title="2025/6/25 00:00:00">2025-06-25</time>发表</span><span class="level-item"><a class="link-muted" href="/categories/Guides/">Guides</a></span><span class="level-item">7 分钟读完 (大约1061个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">Icarus 用户指南｜Hexo 内置标签指南</h1><div class="content"><article class="message message-immersive is-primary">
+<div class="message-body">
+<i class="fas fa-lightbulb mr-2"></i>以下内容取自 
+<a target="_blank" rel="noopener" href="https://hexo.io/docs/tag-plugins.html">Hexo 文档</a>
+并略有修订。
+</div>
+</article>
+
+<p>标签插件与文章标签不同。它们从 Octopress 移植而来，为你快速添加特定内容到文章中提供了一种实用方法。</p>
+<span id="more"></span>
+<h2 id="块引用"><a href="#块引用" class="headerlink" title="块引用"></a>块引用</h2><p>非常适合在文章中添加引用内容，可选择性包含作者、来源和标题信息。</p>
+<p><strong>别名：</strong> quote</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;% blockquote [author[, source]] [link] [source_link_title] %&#125;</span><br><span class="line">内容</span><br><span class="line">&#123;% endblockquote %&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p><strong>不带参数。普通块引用。</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;% blockquote %&#125; </span><br><span class="line">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque hendrerit lacus ut purus iaculis feugiat. Sed nec tempor elit, quis aliquam neque. Curabitur sed diam eget dolor fermentum semper at eu lorem.</span><br><span class="line">&#123;% endblockquote %&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque hendrerit lacus ut purus iaculis feugiat. Sed nec tempor elit, quis aliquam neque. Curabitur sed diam eget dolor fermentum semper at eu lorem.</p>
+</blockquote>
+
+<p><strong>引用自书籍</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;% blockquote David Levithan, Wide Awake %&#125;</span><br><span class="line">不要只为自己寻求幸福。要为所有人寻求幸福。通过仁慈。通过怜悯。</span><br><span class="line">&#123;% endblockquote %&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote><p>不要只为自己寻求幸福。要为所有人寻求幸福。通过仁慈。通过怜悯。</p>
+<footer><strong>David Levithan</strong><cite>Wide Awake</cite></footer></blockquote>
+
+<p><strong>引用自 Twitter</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;% blockquote @DevDocs https://twitter.com/devdocs/status/356095192085962752 %&#125;</span><br><span class="line">新功能：DevDocs 现在带有语法高亮功能。http://devdocs.io </span><br><span class="line">&#123;% endblockquote %&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote><p>新功能：DevDocs 现在带有语法高亮功能。<a target="_blank" rel="noopener" href="http://devdocs.io/">http://devdocs.io</a> </p>
+<footer><strong>@DevDocs</strong><cite><a target="_blank" rel="noopener" href="https://twitter.com/devdocs/status/356095192085962752">twitter.com/devdocs/status/356095192085962752</a></cite></footer></blockquote>
+
+<p><strong>引用自网页文章</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;% blockquote Seth Godin http://sethgodin.typepad.com/seths_blog/2009/07/welcome-to-island-marketing.html 欢迎来到 Island Marketing %&#125;</span><br><span class="line">每一次互动都弥足珍贵，也是一次愉悦的机会。</span><br><span class="line">&#123;% endblockquote %&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote><p>每一次互动都弥足珍贵，也是一次愉悦的机会。</p>
+<footer><strong>Seth Godin</strong><cite><a target="_blank" rel="noopener" href="http://sethgodin.typepad.com/seths_blog/2009/07/welcome-to-island-marketing.html">欢迎来到 Island Marketing</a></cite></footer></blockquote>
+
+<h2 id="代码块"><a href="#代码块" class="headerlink" title="代码块"></a>代码块</h2><p>这是在文章中添加代码片段的实用功能。</p>
+<p><strong>别名：</strong> code</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;% codeblock [title] [lang:language] [url] [链接文本] [附加选项] %&#125;</span><br><span class="line">代码片段</span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h3><p><strong>普通代码块</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;% codeblock %&#125; </span><br><span class="line">alert(&#x27;你好，世界！&#x27;); </span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alert(&#x27;你好，世界！&#x27;); </span><br></pre></td></tr></table></figure>
+
+<p><strong>指定语言</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;% codeblock lang:objc %&#125;</span><br><span class="line">[rectangle setX: 10 y: 10 width: 20 height: 20];</span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[rectangle setX: <span class="number">10</span> y: <span class="number">10</span> width: <span class="number">20</span> height: <span class="number">20</span>];</span><br></pre></td></tr></table></figure>
+
+<p><strong>为代码块添加标题</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;% codeblock Array.map %&#125;</span><br><span class="line">array.map(callback[, thisArg]) </span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><figcaption><span>Array.map</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">array.map(callback[, thisArg]) </span><br></pre></td></tr></table></figure>
+
+<p><strong>添加标题和 URL</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;% codeblock _.compact http://underscorejs.org/#compact Underscore.js %&#125;</span><br><span class="line">_.compact([0, 1, false, 2, &#x27;&#x27;, 3]); </span><br><span class="line">=&gt; [1, 2, 3] </span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><figcaption><span>_.compact</span><a target="_blank" rel="noopener" href="http://underscorejs.org/#compact">Underscore.js</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">_.compact([0, 1, false, 2, &#x27;&#x27;, 3]); </span><br><span class="line">=&gt; [1, 2, 3] </span><br></pre></td></tr></table></figure>
+
+<h2 id="反引号代码块"><a href="#反引号代码块" class="headerlink" title="反引号代码块"></a>反引号代码块</h2><p>这与使用代码块相同，但使用三个反引号来分隔代码块。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">`` [language] [title] [url] [link text] code snippet ``</span><br></pre></td></tr></table></figure>
+
+<h2 id="拉取引用"><a href="#拉取引用" class="headerlink" title="拉取引用"></a>拉取引用</h2><p>要在文章中添加拉取引用：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;% pullquote [class] %&#125;</span><br><span class="line">内容</span><br><span class="line">&#123;% endpullquote %&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="iframe"><a href="#iframe" class="headerlink" title="iframe"></a>iframe</h2><p>嵌入 iframe：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% iframe url [宽度] [高度] %&#125;</span><br></pre></td></tr></table></figure>
+
+<iframe src="https://ppoffice.github.io/hexo-theme-icarus" width="100%" height="400" frameborder="0" loading="lazy" allowfullscreen></iframe>
+
+<h2 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h2><p>插入指定大小的图片。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% img [类名] /path/to/image [宽度] [高度] &#x27;&quot;标题文本&quot; &quot;替代文本&quot;&#x27; %&#125;</span><br></pre></td></tr></table></figure>
+
+<img src="/gallery/covers/vector_landscape_1.svg" class="" title="100% 100% &quot;Vector Landscape&quot; &quot;Vector Landscape&quot;">
+
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p>插入带有 <code>target=&quot;_blank&quot;</code> 属性的链接。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% 链接文本 url [外部] [标题] %&#125;</span><br></pre></td></tr></table></figure>
+
+<a href="https://hexo.io/" title="Hexo.io" target="_blank">Hexo.io</a>
+
+<h2 id="包含代码"><a href="#包含代码" class="headerlink" title="包含代码"></a>包含代码</h2><p>插入 <code>source/downloads/code</code> 文件夹中的代码片段。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% include_code [标题] [语言：语言] [发件人：行] [收件人：行] 路径/到/文件 %&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="示例-2"><a href="#示例-2" class="headerlink" title="示例"></a>示例</h3><p><strong>嵌入 test.js 的全部内容</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% include_code lang:javascript test.js %&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>仅嵌入第 3 行</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% include_code lang:javascript 从：3 到：3 test.js %&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>嵌入第 5 至 8 行</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% include_code lang:javascript 从：5 到：8 test.js %&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>将第 5 行嵌入到文件末尾</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% include_code lang:javascript 来自:5 test.js %&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>嵌入第 1 至 8 行</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% include_code lang:javascript 到:8 test.js %&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="包含文章"><a href="#包含文章" class="headerlink" title="包含文章"></a>包含文章</h2><p>包含指向其他文章的链接。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;% post_path 文件名 %&#125; </span><br><span class="line">&#123;% post_link 文件名 [标题] [转义] %&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="包含资源"><a href="#包含资源" class="headerlink" title="包含资源"></a>包含资源</h2><p>包含文章资源。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;% asset_path 文件名 %&#125; </span><br><span class="line">&#123;% asset_img [类名] slug [宽度] [高度] [标题文本 [替代文本]] %&#125; </span><br><span class="line">&#123;% asset_link 文件名 [标题] [转义] %&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="原始内容"><a href="#原始内容" class="headerlink" title="原始内容"></a>原始内容</h2><p>如果某些内容在文章处理中导致问题，可以使用 <code>raw</code> 标签将其包裹，以避免渲染错误。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;% raw %&#125;</span><br><span class="line">内容</span><br><span class="line">&#123;% endraw %&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="文章摘要"><a href="#文章摘要" class="headerlink" title="文章摘要"></a>文章摘要</h2><p>将 <code>&lt;!-- more --&gt;</code> 标签之前的文本用作帖子的摘要。如果在前置事项中指定了 <code>excerpt:</code> 值，则该值优先。</p>
+<p><strong>示例:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</span><br><span class="line">&lt;!-- more --&gt;</span><br><span class="line">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span><br></pre></td></tr></table></figure></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/%E7%AE%97%E6%B3%95%E9%9A%8F%E6%83%B3%E5%BD%95/%E6%95%B0%E7%BB%84/%E4%BB%A3%E7%A0%81%E9%9A%8F%E6%83%B3%E5%BD%95%E7%AE%97%E6%B3%95%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%B8%80%E5%A4%A9%EF%BD%9C%E6%95%B0%E7%BB%84part01/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">代码随想录算法训练营第一天｜数组Part01</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/%E4%BB%A3%E7%A0%81%E5%BF%83%E5%BE%97/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95%EF%BC%9A%E4%BB%8E%E8%A7%A3%E5%86%B3%E7%BB%84%E5%90%88%E3%80%81%E5%88%87%E5%89%B2%E3%80%81%E5%AD%90%E9%9B%86%E7%AD%89%E9%97%AE%E9%A2%98%E8%AF%B4%E8%B5%B7/"><span class="level-item">回溯算法：从解决组合、切割、子集等问题说起</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><!--!--></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1 is-sticky"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="/img/H1rk.png" alt="H1rk"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">H1rk</p><p class="is-size-6 is-block">Web Developer</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>夜之城</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">24</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">7</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">9</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/hiiiroko" target="_blank" rel="me noopener">关注我</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Github" href="https://github.com/hiiiroko">Github</a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="LeetCode" href="https://leetcode.cn/u/tender-boumaniz5">LeetCode</a></div></div></div><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#块引用"><span class="level-left"><span class="level-item">1</span><span class="level-item">块引用</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#示例"><span class="level-left"><span class="level-item">1.1</span><span class="level-item">示例</span></span></a></li></ul></li><li><a class="level is-mobile" href="#代码块"><span class="level-left"><span class="level-item">2</span><span class="level-item">代码块</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#示例-1"><span class="level-left"><span class="level-item">2.1</span><span class="level-item">示例</span></span></a></li></ul></li><li><a class="level is-mobile" href="#反引号代码块"><span class="level-left"><span class="level-item">3</span><span class="level-item">反引号代码块</span></span></a></li><li><a class="level is-mobile" href="#拉取引用"><span class="level-left"><span class="level-item">4</span><span class="level-item">拉取引用</span></span></a></li><li><a class="level is-mobile" href="#iframe"><span class="level-left"><span class="level-item">5</span><span class="level-item">iframe</span></span></a></li><li><a class="level is-mobile" href="#图片"><span class="level-left"><span class="level-item">6</span><span class="level-item">图片</span></span></a></li><li><a class="level is-mobile" href="#链接"><span class="level-left"><span class="level-item">7</span><span class="level-item">链接</span></span></a></li><li><a class="level is-mobile" href="#包含代码"><span class="level-left"><span class="level-item">8</span><span class="level-item">包含代码</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#示例-2"><span class="level-left"><span class="level-item">8.1</span><span class="level-item">示例</span></span></a></li></ul></li><li><a class="level is-mobile" href="#包含文章"><span class="level-left"><span class="level-item">9</span><span class="level-item">包含文章</span></span></a></li><li><a class="level is-mobile" href="#包含资源"><span class="level-left"><span class="level-item">10</span><span class="level-item">包含资源</span></span></a></li><li><a class="level is-mobile" href="#原始内容"><span class="level-left"><span class="level-item">11</span><span class="level-item">原始内容</span></span></a></li><li><a class="level is-mobile" href="#文章摘要"><span class="level-left"><span class="level-item">12</span><span class="level-item">文章摘要</span></span></a></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/Guides/"><span class="level-start"><span class="level-item">Guides</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li><li><a class="level is-mobile" href="/categories/Plugins/"><span class="level-start"><span class="level-item">Plugins</span></span><span class="level-end"><span class="level-item tag">6</span></span></a></li><li><a class="level is-mobile" href="/categories/Widgets/"><span class="level-start"><span class="level-item">Widgets</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E4%BB%A3%E7%A0%81%E5%BF%83%E5%BE%97/"><span class="level-start"><span class="level-item">代码心得</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/%E7%AE%97%E6%B3%95%E9%9A%8F%E6%83%B3%E5%BD%95/"><span class="level-start"><span class="level-item">算法随想录</span></span><span class="level-end"><span class="level-item tag">4</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E7%AE%97%E6%B3%95%E9%9A%8F%E6%83%B3%E5%BD%95/%E6%95%B0%E7%BB%84/"><span class="level-start"><span class="level-item">数组</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E7%AE%97%E6%B3%95%E9%9A%8F%E6%83%B3%E5%BD%95/%E9%93%BE%E8%A1%A8/"><span class="level-start"><span class="level-item">链表</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li></ul></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/DFS/"><span class="tag">DFS</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/JavaScript/"><span class="tag">JavaScript</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Node-js/"><span class="tag">Node.js</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/"><span class="tag">二分查找</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%89%8D%E7%BC%80%E5%92%8C/"><span class="tag">前缀和</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/"><span class="tag">动态规划</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/"><span class="tag">回溯算法</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/"><span class="tag">滑动窗口</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%B0%E5%BF%86%E5%8C%96%E6%90%9C%E7%B4%A2/"><span class="tag">记忆化搜索</span><span class="tag">1</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/2H.png" alt="hiiiroko&#039;s Blog" height="28"></a><p class="is-size-7"><span>&copy; 2025 H1rk</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Discuss on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus/discussions"><i class="fas fa-comments"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script data-pjax src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script data-pjax src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><div id="outdated"><h6>Your browser is out-of-date!</h6><p>Update your browser to view this website correctly.&amp;npsb;<a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p><p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">×</a></p></div><script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script><script>window.addEventListener("load", function () {
+            outdatedBrowser({
+                bgColor: '#f25648',
+                color: '#ffffff',
+                lowerThan: 'object-fit' // display on IE11 or below
+            });
+        });</script><!--!--><!--!--><!--!--><script data-pjax src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>
