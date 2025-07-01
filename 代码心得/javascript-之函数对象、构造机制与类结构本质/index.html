@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><title>JavaScript 之函数对象、构造机制与类结构本质 - hiiiroko&#039;s Blog</title><link rel="manifest" href="/manifest.json"><meta name="theme-color" content="#f7f7f7"><meta name="application-name" content="hiiiroko&#039;s Blog"><meta name="msapplication-TileImage" content="/img/Seal.png"><meta name="msapplication-TileColor" content="#f7f7f7"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="hiiiroko&#039;s Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="JavaScript 中的函数不仅是可调用的代码单元，更是具备内部行为接口的对象类型。 理解函数对象的本质，是掌握 JavaScript 类、构造器、继承机制的基础。"><meta property="og:type" content="blog"><meta property="og:title" content="JavaScript 之函数对象、构造机制与类结构本质"><meta property="og:url" content="http://example.com/%E4%BB%A3%E7%A0%81%E5%BF%83%E5%BE%97/javascript-%E4%B9%8B%E5%87%BD%E6%95%B0%E5%AF%B9%E8%B1%A1%E3%80%81%E6%9E%84%E9%80%A0%E6%9C%BA%E5%88%B6%E4%B8%8E%E7%B1%BB%E7%BB%93%E6%9E%84%E6%9C%AC%E8%B4%A8/"><meta property="og:site_name" content="hiiiroko&#039;s Blog"><meta property="og:description" content="JavaScript 中的函数不仅是可调用的代码单元，更是具备内部行为接口的对象类型。 理解函数对象的本质，是掌握 JavaScript 类、构造器、继承机制的基础。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="http://example.com/img/og_image.png"><meta property="article:published_time" content="2025-07-01T14:00:22.000Z"><meta property="article:author" content="H1rk"><meta property="article:tag" content="JavaScript"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="http://example.com/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com/%E4%BB%A3%E7%A0%81%E5%BF%83%E5%BE%97/javascript-%E4%B9%8B%E5%87%BD%E6%95%B0%E5%AF%B9%E8%B1%A1%E3%80%81%E6%9E%84%E9%80%A0%E6%9C%BA%E5%88%B6%E4%B8%8E%E7%B1%BB%E7%BB%93%E6%9E%84%E6%9C%AC%E8%B4%A8/"},"headline":"JavaScript 之函数对象、构造机制与类结构本质","image":["http://example.com/img/og_image.png"],"datePublished":"2025-07-01T14:00:22.000Z","author":{"@type":"Person","name":"H1rk"},"publisher":{"@type":"Organization","name":"hiiiroko's Blog","logo":{"@type":"ImageObject","url":"http://example.com/img/2H.png"}},"description":"JavaScript 中的函数不仅是可调用的代码单元，更是具备内部行为接口的对象类型。 理解函数对象的本质，是掌握 JavaScript 类、构造器、继承机制的基础。"}</script><link rel="canonical" href="http://example.com/%E4%BB%A3%E7%A0%81%E5%BF%83%E5%BE%97/javascript-%E4%B9%8B%E5%87%BD%E6%95%B0%E5%AF%B9%E8%B1%A1%E3%80%81%E6%9E%84%E9%80%A0%E6%9C%BA%E5%88%B6%E4%B8%8E%E7%B1%BB%E7%BB%93%E6%9E%84%E6%9C%AC%E8%B4%A8/"><link rel="icon" href="/img/Seal.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link data-pjax rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link data-pjax rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css"><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/2H.png" alt="hiiiroko&#039;s Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2025-07-01T14:00:22.000Z" title="2025/7/1 22:00:22">2025-07-01</time>发表</span><span class="level-item"><a class="link-muted" href="/categories/%E4%BB%A3%E7%A0%81%E5%BF%83%E5%BE%97/">代码心得</a></span><span class="level-item">6 分钟读完 (大约927个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">JavaScript 之函数对象、构造机制与类结构本质</h1><div class="content"><p>JavaScript 中的函数不仅是可调用的代码单元，更是具备内部行为接口的对象类型。</p>
+<p>理解函数对象的本质，是掌握 JavaScript 类、构造器、继承机制的基础。</p>
+<span id="more"></span>
+
+<h3 id="一、函数对象的-Call-接口"><a href="#一、函数对象的-Call-接口" class="headerlink" title="一、函数对象的 [[Call]] 接口"></a>一、函数对象的 <code>[[Call]]</code> 接口</h3><p>在 ECMAScript 规范中，函数是一种对象，它拥有内部方法 <code>[[Call]]</code>，可以被 <code>()</code> 操作符触发执行。这是函数最基本的调用行为。</p>
+<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">sum</span>(<span class="params">a, b</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> a + b;</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">sum</span>(<span class="number">1</span>, <span class="number">2</span>); <span class="comment">// 实际上触发 sum.[[Call]](undefined, [1, 2])</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>当使用 <code>sum(1, 2)</code> 时，JS 引擎会查找 <code>sum</code> 对象是否具备 <code>[[Call]]</code> 方法。</p>
+</li>
+<li><p>若存在，则执行该内部方法，传入：</p>
+<ul>
+<li><code>thisArgument</code>：默认情况下是 <code>undefined</code>（严格模式）或 <code>window</code>（非严格模式）</li>
+<li><code>argumentList</code>：为调用时传入的参数数组</li>
+</ul>
+</li>
+</ul>
+<p><strong>结论：任何具备 <code>[[Call]]</code> 的对象都能被 <code>()</code> 调用。</strong></p>
+<h3 id="二、构造器的-Construct-接口"><a href="#二、构造器的-Construct-接口" class="headerlink" title="二、构造器的 [[Construct]] 接口"></a>二、构造器的 <code>[[Construct]]</code> 接口</h3><p>当一个函数对象被 <code>new</code> 关键字调用时，触发的是另一个内部接口 <code>[[Construct]]</code>，它定义了构造器行为。</p>
+<h4 id="执行流程"><a href="#执行流程" class="headerlink" title="执行流程"></a>执行流程</h4><p>以 <code>new Foo(1, 2)</code> 为例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Foo</span>(<span class="params">name</span>) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">name</span> = name;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">new</span> <span class="title class_">Foo</span>(<span class="string">&quot;Shira&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>其内部等价于以下步骤：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 简化伪代码：</span></span><br><span class="line"><span class="keyword">function</span> [[<span class="title class_">Construct</span>]](<span class="title class_">Foo</span>, args) &#123;</span><br><span class="line">  <span class="keyword">const</span> obj = &#123;&#125;;                             <span class="comment">// 1. 创建空对象</span></span><br><span class="line">  obj.<span class="property">__proto__</span> = <span class="title class_">Foo</span>.<span class="property"><span class="keyword">prototype</span></span>;              <span class="comment">// 2. 关联原型</span></span><br><span class="line">  <span class="keyword">const</span> result = <span class="title class_">Foo</span>.[[<span class="title class_">Call</span>]](obj, args);     <span class="comment">// 3. 初始化对象（实际执行 Foo.call(obj, ...args)）</span></span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">isObject</span>(result) ? result : obj;     <span class="comment">// 4. 决定返回值</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="返回规则"><a href="#返回规则" class="headerlink" title="返回规则"></a>返回规则</h4><ul>
+<li>如果构造函数中显式 <code>return</code> 一个对象，则该对象将作为构造结果返回。</li>
+<li>否则返回构造流程中创建并初始化的 <code>obj</code>。</li>
+</ul>
+<h3 id="三、-call-方法与-Call-的区别与联系"><a href="#三、-call-方法与-Call-的区别与联系" class="headerlink" title="三、.call() 方法与 [[Call]] 的区别与联系"></a>三、<code>.call()</code> 方法与 <code>[[Call]]</code> 的区别与联系</h3><p><code>.call()</code> 是函数对象上定义的一个方法，允许我们显式调用该函数，并自定义其 <code>this</code> 指向。</p>
+<h4 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">greet</span>(<span class="params">msg</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">name</span> + <span class="string">&#x27;: &#x27;</span> + msg);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> obj = &#123; <span class="attr">name</span>: <span class="string">&#x27;Shira&#x27;</span> &#125;;</span><br><span class="line">greet.<span class="title function_">call</span>(obj, <span class="string">&quot;Hello&quot;</span>); <span class="comment">// Shira: Hello</span></span><br></pre></td></tr></table></figure>
+
+<p>等价于执行：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">greet.[[<span class="title class_">Call</span>]](obj, [<span class="string">&quot;Hello&quot;</span>])</span><br></pre></td></tr></table></figure>
+
+<h4 id="总结对比表"><a href="#总结对比表" class="headerlink" title="总结对比表"></a>总结对比表</h4><table>
+<thead>
+<tr>
+<th>场景</th>
+<th>谁调用 <code>[[Call]]</code></th>
+<th><code>this</code> 是什么？</th>
+<th>语义角色</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>f()</code></td>
+<td>引擎直接触发 <code>f.[[Call]](...)</code></td>
+<td>默认是 <code>undefined</code> 或 <code>window</code></td>
+<td>普通函数调用</td>
+</tr>
+<tr>
+<td><code>f.call(obj, ...args)</code></td>
+<td><code>call()</code> 是你显式触发 <code>f.[[Call]]</code></td>
+<td>显式指定为 <code>obj</code></td>
+<td>显式绑定 this 的函数调用</td>
+</tr>
+<tr>
+<td><code>new Foo(...)</code> 内部的 <code>Foo.call(obj)</code></td>
+<td><code>[[Construct]]</code> 内部逻辑触发 <code>Foo.[[Call]]</code></td>
+<td>构造函数用来初始化的对象 <code>obj</code></td>
+<td>构造过程的一部分</td>
+</tr>
+</tbody></table>
+<h3 id="四、类与构造器的本质：语法糖的展开"><a href="#四、类与构造器的本质：语法糖的展开" class="headerlink" title="四、类与构造器的本质：语法糖的展开"></a>四、类与构造器的本质：语法糖的展开</h3><p>ES6 引入的 <code>class</code> 是对传统构造函数 + 原型链的简化写法。两者底层结构完全一致。</p>
+<h4 id="示例对比"><a href="#示例对比" class="headerlink" title="示例对比"></a>示例对比</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ES6 class</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Person</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">name</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">name</span> = name;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title function_">sayHi</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Hi, I&#x27;m&quot;</span>, <span class="variable language_">this</span>.<span class="property">name</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 等价传统写法</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span>(<span class="params">name</span>) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">name</span> = name;</span><br><span class="line">&#125;</span><br><span class="line"><span class="title class_">Person</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">sayHi</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Hi, I&#x27;m&quot;</span>, <span class="variable language_">this</span>.<span class="property">name</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><code>class</code> 形式具有以下特性：</p>
+<ul>
+<li>默认启用严格模式</li>
+<li>方法定义在 <code>prototype</code> 上，不可枚举</li>
+<li>不允许类体外部再次修改构造器名</li>
+</ul>
+<h3 id="五、函数对象是可修改的：Monkey-Patch-技术"><a href="#五、函数对象是可修改的：Monkey-Patch-技术" class="headerlink" title="五、函数对象是可修改的：Monkey Patch 技术"></a>五、函数对象是可修改的：Monkey Patch 技术</h3><p>函数是对象，因此可以被重写、封装或增强。这是 JS 世界中常见的“Monkey Patch” 技术。</p>
+<h4 id="示例：重写数组方法"><a href="#示例：重写数组方法" class="headerlink" title="示例：重写数组方法"></a>示例：重写数组方法</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> originalPush = <span class="title class_">Array</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">push</span>;</span><br><span class="line"><span class="title class_">Array</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">push</span> = <span class="keyword">function</span> (<span class="params">...args</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Pushing&quot;</span>, args);</span><br><span class="line">  <span class="keyword">return</span> originalPush.<span class="title function_">apply</span>(<span class="variable language_">this</span>, args);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>这种技术可用于：</p>
+<ul>
+<li>注入日志</li>
+<li>动态拦截行为</li>
+<li>实现 mock &#x2F; 追踪逻辑</li>
+</ul>
+<h3 id="六、小结与建议练习"><a href="#六、小结与建议练习" class="headerlink" title="六、小结与建议练习"></a>六、小结与建议练习</h3><h4 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h4><ul>
+<li>函数对象拥有 <code>[[Call]]</code>，可被 <code>()</code> 调用</li>
+<li>构造器拥有 <code>[[Construct]]</code>，可被 <code>new</code> 调用</li>
+<li><code>.call()</code> 是触发 <code>[[Call]]</code> 的用户级 API</li>
+<li><code>class</code> 是构造函数 + prototype 的封装</li>
+<li>函数对象可以被重写、代理，实现动态扩展</li>
+</ul>
+</div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/JavaScript/">JavaScript</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/%E7%AE%97%E6%B3%95%E9%9A%8F%E6%83%B3%E5%BD%95/%E5%93%88%E5%B8%8C%E8%A1%A8/%E4%BB%A3%E7%A0%81%E9%9A%8F%E6%83%B3%E5%BD%95%E7%AE%97%E6%B3%95%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%B8%83%E5%A4%A9%EF%BD%9C%E5%93%88%E5%B8%8C%E8%A1%A8part02/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">代码随想录算法训练营第七天｜哈希表Part02</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/%E7%AE%97%E6%B3%95%E9%9A%8F%E6%83%B3%E5%BD%95/%E5%93%88%E5%B8%8C%E8%A1%A8/%E4%BB%A3%E7%A0%81%E9%9A%8F%E6%83%B3%E5%BD%95%E7%AE%97%E6%B3%95%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E5%85%AD%E5%A4%A9%EF%BD%9C%E5%93%88%E5%B8%8C%E8%A1%A8part01/"><span class="level-item">代码随想录算法训练营第六天｜哈希表Part01</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><!--!--></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1 is-sticky"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="/img/H1rk.png" alt="H1rk"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">H1rk</p><p class="is-size-6 is-block">Web Developer</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>夜之城</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">29</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">8</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">11</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/hiiiroko" target="_blank" rel="me noopener">关注我</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Github" href="https://github.com/hiiiroko">Github</a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="LeetCode" href="https://leetcode.cn/u/tender-boumaniz5">LeetCode</a></div></div></div><!--!--><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/Guides/"><span class="level-start"><span class="level-item">Guides</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li><li><a class="level is-mobile" href="/categories/Plugins/"><span class="level-start"><span class="level-item">Plugins</span></span><span class="level-end"><span class="level-item tag">6</span></span></a></li><li><a class="level is-mobile" href="/categories/Widgets/"><span class="level-start"><span class="level-item">Widgets</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E4%BB%A3%E7%A0%81%E5%BF%83%E5%BE%97/"><span class="level-start"><span class="level-item">代码心得</span></span><span class="level-end"><span class="level-item tag">6</span></span></a></li><li><a class="level is-mobile" href="/categories/%E7%AE%97%E6%B3%95%E9%9A%8F%E6%83%B3%E5%BD%95/"><span class="level-start"><span class="level-item">算法随想录</span></span><span class="level-end"><span class="level-item tag">6</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E7%AE%97%E6%B3%95%E9%9A%8F%E6%83%B3%E5%BD%95/%E5%93%88%E5%B8%8C%E8%A1%A8/"><span class="level-start"><span class="level-item">哈希表</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E7%AE%97%E6%B3%95%E9%9A%8F%E6%83%B3%E5%BD%95/%E6%95%B0%E7%BB%84/"><span class="level-start"><span class="level-item">数组</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E7%AE%97%E6%B3%95%E9%9A%8F%E6%83%B3%E5%BD%95/%E9%93%BE%E8%A1%A8/"><span class="level-start"><span class="level-item">链表</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li></ul></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/DFS/"><span class="tag">DFS</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/JavaScript/"><span class="tag">JavaScript</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Node-js/"><span class="tag">Node.js</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/"><span class="tag">二分查找</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%89%8D%E7%BC%80%E5%92%8C/"><span class="tag">前缀和</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/"><span class="tag">动态规划</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%93%88%E5%B8%8C%E7%A2%B0%E6%92%9E/"><span class="tag">哈希碰撞</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/"><span class="tag">回溯算法</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/"><span class="tag">滑动窗口</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%B1%BB/"><span class="tag">类</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%B0%E5%BF%86%E5%8C%96%E6%90%9C%E7%B4%A2/"><span class="tag">记忆化搜索</span><span class="tag">1</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/2H.png" alt="hiiiroko&#039;s Blog" height="28"></a><p class="is-size-7"><span>&copy; 2025 H1rk</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Discuss on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus/discussions"><i class="fas fa-comments"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script data-pjax src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script data-pjax src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><div id="outdated"><h6>Your browser is out-of-date!</h6><p>Update your browser to view this website correctly.&amp;npsb;<a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p><p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">×</a></p></div><script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script><script>window.addEventListener("load", function () {
+            outdatedBrowser({
+                bgColor: '#f25648',
+                color: '#ffffff',
+                lowerThan: 'object-fit' // display on IE11 or below
+            });
+        });</script><!--!--><!--!--><!--!--><script data-pjax src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>
