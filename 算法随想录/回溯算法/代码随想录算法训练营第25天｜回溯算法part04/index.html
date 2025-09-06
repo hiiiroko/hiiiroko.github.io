@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><title>代码随想录算法训练营第25天｜回溯算法Part04 - hiiiroko&#039;s Blog</title><link rel="manifest" href="/manifest.json"><meta name="theme-color" content="#f7f7f7"><meta name="application-name" content="hiiiroko&#039;s Blog"><meta name="msapplication-TileImage" content="/img/Seal.png"><meta name="msapplication-TileColor" content="#f7f7f7"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="hiiiroko&#039;s Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="记录题目：  重新安排行程 N 皇后 解数独"><meta property="og:type" content="blog"><meta property="og:title" content="代码随想录算法训练营第25天｜回溯算法Part04"><meta property="og:url" content="http://example.com/%E7%AE%97%E6%B3%95%E9%9A%8F%E6%83%B3%E5%BD%95/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/%E4%BB%A3%E7%A0%81%E9%9A%8F%E6%83%B3%E5%BD%95%E7%AE%97%E6%B3%95%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC25%E5%A4%A9%EF%BD%9C%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95part04/"><meta property="og:site_name" content="hiiiroko&#039;s Blog"><meta property="og:description" content="记录题目：  重新安排行程 N 皇后 解数独"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="http://example.com/img/og_image.png"><meta property="article:published_time" content="2025-07-24T11:26:12.000Z"><meta property="article:author" content="H1rk"><meta property="article:tag" content="Hierholzer 算法"><meta property="article:tag" content="欧拉路径"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="http://example.com/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com/%E7%AE%97%E6%B3%95%E9%9A%8F%E6%83%B3%E5%BD%95/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/%E4%BB%A3%E7%A0%81%E9%9A%8F%E6%83%B3%E5%BD%95%E7%AE%97%E6%B3%95%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC25%E5%A4%A9%EF%BD%9C%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95part04/"},"headline":"代码随想录算法训练营第25天｜回溯算法Part04","image":["http://example.com/img/og_image.png"],"datePublished":"2025-07-24T11:26:12.000Z","author":{"@type":"Person","name":"H1rk"},"publisher":{"@type":"Organization","name":"hiiiroko's Blog","logo":{"@type":"ImageObject","url":"http://example.com/img/2H.png"}},"description":"记录题目：  重新安排行程 N 皇后 解数独"}</script><link rel="canonical" href="http://example.com/%E7%AE%97%E6%B3%95%E9%9A%8F%E6%83%B3%E5%BD%95/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/%E4%BB%A3%E7%A0%81%E9%9A%8F%E6%83%B3%E5%BD%95%E7%AE%97%E6%B3%95%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC25%E5%A4%A9%EF%BD%9C%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95part04/"><link rel="icon" href="/img/Seal.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link data-pjax rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link data-pjax rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css"><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/2H.png" alt="hiiiroko&#039;s Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2025-07-24T11:26:12.000Z" title="2025/7/24 19:26:12">2025-07-24</time>发表</span><span class="level-item"><a class="link-muted" href="/categories/%E7%AE%97%E6%B3%95%E9%9A%8F%E6%83%B3%E5%BD%95/">算法随想录</a><span> / </span><a class="link-muted" href="/categories/%E7%AE%97%E6%B3%95%E9%9A%8F%E6%83%B3%E5%BD%95/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/">回溯算法</a></span><span class="level-item">20 分钟读完 (大约2982个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">代码随想录算法训练营第25天｜回溯算法Part04</h1><div class="content"><p>记录题目：</p>
+<ul>
+<li>重新安排行程</li>
+<li>N 皇后</li>
+<li>解数独</li>
+</ul>
+<span id="more"></span>
+
+<hr>
+<blockquote><p>给定一个机票的字符串二维数组 <code>tickets</code>，<br>其中 <code>tickets[i] = [from, to]</code> 表示从 <code>from</code> 到 <code>to</code> 的航班信息。<br>从 <code>&quot;JFK&quot;</code> 机场出发，返回重新安排后的行程，<br>行程按字典序排列且恰好使用所有机票一次。</p>
+<footer><strong>LeetCode</strong><cite><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/reconstruct-itinerary/description/">332. 重新安排行程</a></cite></footer></blockquote>
+
+<div class="example-tab-container">
+<div class="tabs my-3 is-toggle">
+        <ul class="mx-0 my-0">
+            <li class="is-active">
+          <a href="#tab_title_boxed_1">
+              <p>N 叉树</p>
+
+          </a>
+      </li><li>
+          <a href="#tab_title_boxed_2">
+              <p>Hierholzer 算法</p>
+
+          </a>
+      </li>
+        </ul>
+    </div>
+    <div id="tab_title_boxed_1" class="tab-content">
+          <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> findItinerary = <span class="keyword">function</span> (<span class="params">tickets</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> result = [<span class="string">&#x27;JFK&#x27;</span>], map = &#123;&#125;;</span><br><span class="line">    <span class="comment">// 构建邻接表</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> [<span class="keyword">from</span>, to] <span class="keyword">of</span> tickets) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!map[<span class="keyword">from</span>]) &#123;</span><br><span class="line">            map[<span class="keyword">from</span>] = [];</span><br><span class="line">        &#125;</span><br><span class="line">        map[<span class="keyword">from</span>].<span class="title function_">push</span>(to);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 将目的地按字典序排序</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> city <span class="keyword">in</span> map) &#123;</span><br><span class="line">        map[city].<span class="title function_">sort</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">backtracking</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="comment">// 如果结果已包含所有航班（n 个票，对应 n + 1 个机场）</span></span><br><span class="line">        <span class="keyword">if</span> (result.<span class="property">length</span> === tickets.<span class="property">length</span> + <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">const</span> lastCity = result[result.<span class="property">length</span> - <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">const</span> destinations = map[lastCity];</span><br><span class="line">        <span class="keyword">if</span> (!destinations || destinations.<span class="property">length</span> === <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; destinations.<span class="property">length</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">const</span> nextCity = destinations[i];</span><br><span class="line">            <span class="comment">// 移除当前航线（表示已使用）</span></span><br><span class="line">            destinations.<span class="title function_">splice</span>(i, <span class="number">1</span>);</span><br><span class="line">            result.<span class="title function_">push</span>(nextCity);</span><br><span class="line">            <span class="keyword">if</span> (<span class="title function_">backtracking</span>()) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            <span class="comment">// 回溯：撤销操作</span></span><br><span class="line">            result.<span class="title function_">pop</span>();</span><br><span class="line">            destinations.<span class="title function_">splice</span>(i, <span class="number">0</span>, nextCity);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">backtracking</span>();</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>如果当前路径成功走完（用了所有票），就 <code>return true</code>，一路向上传递终止；
+如果当前路径走死了，就 <code>return false</code>，上一层回退换一条路走。</p>
+<h3 id="方法：slice-start-end"><a href="#方法：slice-start-end" class="headerlink" title="方法：slice(start, end)"></a>方法：<code>slice(start, end)</code></h3><table>
+<thead>
+<tr>
+<th>属性</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>参数形式</strong></td>
+<td>截取索引 <code>[start, end)</code> 之间的元素（不含 <code>end</code>）</td>
+</tr>
+<tr>
+<td><strong>主要作用</strong></td>
+<td>复制子数组</td>
+</tr>
+<tr>
+<td><strong>返回值</strong></td>
+<td>新数组</td>
+</tr>
+<tr>
+<td><strong>是否修改原数组</strong></td>
+<td>否</td>
+</tr>
+</tbody></table>
+<h3 id="方法：splice-start-deleteCount-itemsToAdd"><a href="#方法：splice-start-deleteCount-itemsToAdd" class="headerlink" title="方法：splice(start, deleteCount, ...itemsToAdd)"></a>方法：<code>splice(start, deleteCount, ...itemsToAdd)</code></h3><table>
+<thead>
+<tr>
+<th>属性</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>参数形式</strong></td>
+<td>从索引 <code>start</code> 开始，删除 <code>deleteCount</code> 个元素，<br />并插入 <code>itemsToAdd</code>（可选）</td>
+</tr>
+<tr>
+<td><strong>主要作用</strong></td>
+<td>删除或插入元素</td>
+</tr>
+<tr>
+<td><strong>返回值</strong></td>
+<td>被删除的元素组成的新数组</td>
+</tr>
+<tr>
+<td><strong>是否修改原数组</strong></td>
+<td>是</td>
+</tr>
+</tbody></table>
+
+      </div><div id="tab_title_boxed_2" class="tab-content is-hidden">
+          <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">findItinerary</span>(<span class="params">tickets</span>) &#123;</span><br><span class="line">    <span class="comment">// 邻接表：记录每个起点对应的目的地列表（按字典序排序）</span></span><br><span class="line">    <span class="keyword">const</span> graph = <span class="keyword">new</span> <span class="title class_">Map</span>();</span><br><span class="line">    <span class="comment">// 建图</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> [<span class="keyword">from</span>, to] <span class="keyword">of</span> tickets) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!graph.<span class="title function_">has</span>(<span class="keyword">from</span>)) &#123;</span><br><span class="line">            graph.<span class="title function_">set</span>(<span class="keyword">from</span>, []);</span><br><span class="line">        &#125;</span><br><span class="line">        graph.<span class="title function_">get</span>(<span class="keyword">from</span>).<span class="title function_">push</span>(to);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 对每个出发点的目的地列表进行字典序排序（小的在前）</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> [<span class="keyword">from</span>, tos] <span class="keyword">of</span> graph.<span class="title function_">entries</span>()) &#123;</span><br><span class="line">        tos.<span class="title function_">sort</span>(); <span class="comment">// sort 默认就是字典序</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">const</span> itinerary = [];</span><br><span class="line">    <span class="comment">// 深度优先遍历（Hierholzer 核心）</span></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">dfs</span>(<span class="params"><span class="keyword">from</span></span>) &#123;</span><br><span class="line">        <span class="keyword">const</span> destinations = graph.<span class="title function_">get</span>(<span class="keyword">from</span>) || [];</span><br><span class="line">        <span class="comment">// 一直走到没有可去的目的地为止（贪心优先选字典序小的）</span></span><br><span class="line">        <span class="keyword">while</span> (destinations.<span class="property">length</span> &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="comment">// 移除最小字典序的目的地并前进</span></span><br><span class="line">            <span class="keyword">const</span> next = destinations.<span class="title function_">shift</span>();</span><br><span class="line">            <span class="title function_">dfs</span>(next);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 回退时将当前节点加入结果（注意：是回退时记录）</span></span><br><span class="line">        itinerary.<span class="title function_">unshift</span>(<span class="keyword">from</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">dfs</span>(<span class="string">&quot;JFK&quot;</span>); <span class="comment">// 起点永远是 JFK</span></span><br><span class="line">    <span class="keyword">return</span> itinerary;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Hierholzer 算法依赖“不断从当前节点出发，走完一条尽可能长的路径直到无法继续”，并将走过的节点<strong>按回溯顺序压入栈中</strong>，最终<strong>将所有路径拼接成一条欧拉路径</strong>。</p>
+<p>接下来说明：为何这种看似“贪心 + 回溯”的策略是正确的，并适用于欧拉路径与回路。</p>
+<h2 id="性质一：栈中倒序恰好是欧拉路径的顺序"><a href="#性质一：栈中倒序恰好是欧拉路径的顺序" class="headerlink" title="性质一：栈中倒序恰好是欧拉路径的顺序"></a>性质一：栈中倒序恰好是欧拉路径的顺序</h2><p>Hierholzer 算法的核心是：<strong>在无法再扩展路径（即遇末端节点）时将当前节点压入栈中</strong>，这等价于路径的“反向记录”。</p>
+<h3 id="对于欧拉路径"><a href="#对于欧拉路径" class="headerlink" title="对于欧拉路径"></a>对于欧拉路径</h3><ul>
+<li>若图存在欧拉路径，则起点 <code>s</code> 出度比入度多 <code>1</code>，终点 <code>t</code> 入度比出度多 <code>1</code>。</li>
+<li>DFS 从 <code>s</code> 出发，最终会“遇末端”在 <code>t</code> —— 即第一次无法继续扩展的节点。</li>
+<li>此时 <code>t</code> 被最早压入栈中，随着后续 DFS 回溯，<code>s</code> 最后入栈。</li>
+<li>所以最终<strong>栈中为 t → … → s，倒序后得到 s → … → t</strong>，即完整的欧拉路径。</li>
+</ul>
+<h3 id="对于欧拉回路"><a href="#对于欧拉回路" class="headerlink" title="对于欧拉回路"></a>对于欧拉回路</h3><ul>
+<li>欧拉回路所有节点入度 &#x3D; 出度，路径终点应与起点一致。</li>
+<li>从起点 <code>s</code> 出发，DFS 遍历所有边，最终回到 <code>s</code>，此时 <code>s</code> 是最后回溯入栈的节点。</li>
+<li>所以栈中为 s → … → s，倒序后仍得到完整的回路路径。</li>
+</ul>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>无论是欧拉路径还是回路，<strong>DFS 终止节点最早入栈，起点最晚入栈</strong>，
+因此<strong>栈倒序即为正向路径</strong>。</p>
+<h2 id="性质二：“遇末端压栈”是反向路径构造的关键"><a href="#性质二：“遇末端压栈”是反向路径构造的关键" class="headerlink" title="性质二：“遇末端压栈”是反向路径构造的关键"></a>性质二：“遇末端压栈”是反向路径构造的关键</h2><p>每次 DFS 尽量深入，直到某节点无未访问的出边，称之为“当前末端节点”：</p>
+<ul>
+<li>若首次遇末端的是全局终点 <code>t</code>，自然作为路径终点；</li>
+<li>若是路径中的中继节点，说明它所有出边都已被走完（“被清空”），此时压入栈中表示这一段路径已完成。</li>
+</ul>
+<p>这种构造方式具备如下特征：</p>
+<blockquote>
+<p>当前遇末端的节点，总是当前剩余图中某一条子路径的“终点”。
+在将其压入栈中后，相当于“剪掉”这段子路径。</p>
+</blockquote>
+<p>之后如果从主路径上其他节点重新开始 DFS，
+会构造新的子路径，并拼接到先前路径中。</p>
+<p>因此，“遇末端压栈”其实是<strong>不断将路径段按回溯顺序压入结果栈的过程</strong>，
+最终反转即得完整路径。</p>
+<h2 id="性质三：拼接子路径等价于延伸覆盖所有边"><a href="#性质三：拼接子路径等价于延伸覆盖所有边" class="headerlink" title="性质三：拼接子路径等价于延伸覆盖所有边"></a>性质三：拼接子路径等价于延伸覆盖所有边</h2><p>Hierholzer 算法通过主路径与子路径的拼接，实现对所有边的覆盖。</p>
+<p>举例来说，设第一次 DFS 构建出主路径 <code>A → B → C → D</code>，但 <code>B</code> 节点仍有未访问的回路 <code>B → E → F → B</code>。此时：</p>
+<ul>
+<li>算法沿主路径回溯，将 <code>D</code> 和 <code>C</code> 压入栈；</li>
+<li>回溯至 <code>B</code> 时，发现其仍有出边，于是开始新一轮 DFS，从 <code>B → E → F → B</code>；</li>
+<li>再次回到 <code>B</code> 时，出边已清空，开始回溯并将 <code>B</code>、<code>F</code>、<code>E</code>、<code>B</code> 入栈；</li>
+<li>最后主路径起点 <code>A</code> 入栈。</li>
+</ul>
+<p>此时栈中为 <code>D, C, B, F, E, B, A</code>，反转后得到完整欧拉路径：</p>
+<blockquote>
+<p><code>A → B → E → F → B → C → D</code></p>
+</blockquote>
+<p>这种拼接操作，实际上等价于<strong>在主路径上发现新回路时，将其原地插入主路径中</strong>。</p>
+<p>由于每条边都只访问一次，且 DFS 时就被删除，整个过程保证<strong>不重不漏</strong>，构造出完整欧拉路径。</p>
+<h2 id="欧拉路径-vs-欧拉回路：算法是否都有效？"><a href="#欧拉路径-vs-欧拉回路：算法是否都有效？" class="headerlink" title="欧拉路径 vs 欧拉回路：算法是否都有效？"></a>欧拉路径 vs 欧拉回路：算法是否都有效？</h2><p>是的，<strong>Hierholzer 算法同样适用于欧拉路径和欧拉回路</strong>，差别仅在起点选择与终点处理方式。</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>起点选择</th>
+<th>路径终止位置</th>
+<th>DFS 首次遇末端</th>
+<th>栈顺序</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>欧拉路径</td>
+<td><code>out(s) = in(s)+1</code></td>
+<td>终点 <code>t</code></td>
+<td>最早入栈</td>
+<td><code>t ... s</code></td>
+</tr>
+<tr>
+<td>欧拉回路</td>
+<td>任一非孤立点</td>
+<td>回到起点</td>
+<td>起点最后入栈</td>
+<td><code>s ... s</code></td>
+</tr>
+</tbody></table>
+<p>因此，无需区分处理流程，只需<strong>正确选择起点</strong>即可通用。</p>
+<h2 id="附录：为何-Hierholzer-算法高效？"><a href="#附录：为何-Hierholzer-算法高效？" class="headerlink" title="附录：为何 Hierholzer 算法高效？"></a>附录：为何 Hierholzer 算法高效？</h2><p>相比暴力回溯，Hierholzer 算法不仅更快，而且更结构化。以 “LeetCode 332. 重新安排行程” 为例，其高效性来源于以下几点：</p>
+<h3 id="1-避免无效回溯树枝"><a href="#1-避免无效回溯树枝" class="headerlink" title="1. 避免无效回溯树枝"></a>1. 避免无效回溯树枝</h3><p>暴力回溯枚举所有可能路径，会产生许多“失效树枝”，例如提前走到终点导致图剩余部分不可达。而 Hierholzer 只要图满足欧拉条件，就从起点不断延展，遇末端就收集路径，避免了枚举与试错。</p>
+<h3 id="2-反向收集，不做猜测"><a href="#2-反向收集，不做猜测" class="headerlink" title="2. 反向收集，不做猜测"></a>2. 反向收集，不做猜测</h3><p>Hierholzer 不会预先构造路径，而是通过“走到底、再回溯”的方式按序收集节点，这种反向构造避免了状态回滚，天然符合栈式操作逻辑。</p>
+<h3 id="3-利用结构性假设：有解就唯一覆盖"><a href="#3-利用结构性假设：有解就唯一覆盖" class="headerlink" title="3. 利用结构性假设：有解就唯一覆盖"></a>3. 利用结构性假设：有解就唯一覆盖</h3><p>欧拉图有解意味着存在一条覆盖所有边的路径或回路，Hierholzer 算法正是以此为前提，
+<strong>一步步剪掉路径段，最后组合为全局解</strong>，无需重复判断。</p>
+<h3 id="4-时间复杂度为-O-E"><a href="#4-时间复杂度为-O-E" class="headerlink" title="4. 时间复杂度为 O(E)"></a>4. 时间复杂度为 O(E)</h3><p>每条边最多访问和删除一次，每个节点最多压入栈一次，整体运行在线性时间内。</p>
+<p>因此，Hierholzer 算法是典型的“结构特化”算法：它不追求普适性，而是<strong>深度利用欧拉图的特性</strong>，从而实现常规回溯难以匹敌的效率。</p>
+
+      </div>
+</div>
+
+<hr>
+<blockquote><p>将 n 个皇后放置在 n×n 的棋盘上，使皇后彼此之间不能攻击（任意两个皇后不能处于同一行、同一列或同一对角线上）。<br>返回所有可能的解决方案。</p>
+<footer><strong>LeetCode</strong><cite><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/n-queens/description/">51. N 皇后</a></cite></footer></blockquote>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">backtrack</span> = (<span class="params">row</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (row === n) &#123;</span><br><span class="line">        <span class="comment">// 已放置完 n 个皇后，构造解</span></span><br><span class="line">        res.<span class="title function_">push</span>(path.<span class="title function_">map</span>(<span class="function"><span class="params">col</span> =&gt;</span> <span class="string">&#x27;.&#x27;</span>.<span class="title function_">repeat</span>(col) + <span class="string">&#x27;Q&#x27;</span> + <span class="string">&#x27;.&#x27;</span>.<span class="title function_">repeat</span>(n - col - <span class="number">1</span>)));</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> col = <span class="number">0</span>; col &lt; n; col++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (cols.<span class="title function_">has</span>(col) || diag1.<span class="title function_">has</span>(row - col) || diag2.<span class="title function_">has</span>(row + col)) <span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 放置皇后</span></span><br><span class="line">        path.<span class="title function_">push</span>(col);</span><br><span class="line">        cols.<span class="title function_">add</span>(col);</span><br><span class="line">        diag1.<span class="title function_">add</span>(row - col);</span><br><span class="line">        diag2.<span class="title function_">add</span>(row + col);</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line"><span class="comment">//...</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<blockquote><p>编写一个程序，通过填充空格来解决给定的数独问题。<br>数独的解法需满足：  </p>
+<ul>
+<li>数字 1-9 在每一行只能出现一次。  </li>
+<li>数字 1-9 在每一列只能出现一次。  </li>
+<li>数字 1-9 在每一个 3×3 宫格内只能出现一次。</li>
+</ul>
+<footer><strong>LeetCode</strong><cite><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/sudoku-solver/description/">37. 解数独</a></cite></footer></blockquote>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> solveSudoku = <span class="keyword">function</span> (<span class="params">board</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> rows = <span class="keyword">new</span> <span class="title class_">Array</span>(<span class="number">9</span>).<span class="title function_">fill</span>(<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">const</span> cols = <span class="keyword">new</span> <span class="title class_">Array</span>(<span class="number">9</span>).<span class="title function_">fill</span>(<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">const</span> blocks = <span class="title class_">Array</span>.<span class="title function_">from</span>(&#123; <span class="attr">length</span>: <span class="number">3</span> &#125;, <span class="function">() =&gt;</span> <span class="keyword">new</span> <span class="title class_">Array</span>(<span class="number">3</span>).<span class="title function_">fill</span>(<span class="number">0</span>));</span><br><span class="line">    <span class="keyword">const</span> blanks = [];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">9</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; <span class="number">9</span>; j++) &#123;</span><br><span class="line">            <span class="keyword">const</span> num = <span class="title class_">Number</span>(board[i][j]);</span><br><span class="line">            <span class="keyword">if</span> (num) &#123;</span><br><span class="line">                <span class="keyword">const</span> mask = <span class="number">1</span> &lt;&lt; (num - <span class="number">1</span>);</span><br><span class="line">                rows[i] |= mask;</span><br><span class="line">                cols[j] |= mask;</span><br><span class="line">                blocks[~~(i / <span class="number">3</span>)][~~(j / <span class="number">3</span>)] |= mask;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                blanks.<span class="title function_">push</span>([i, j]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">const</span> <span class="title function_">dfs</span> = (<span class="params">k</span>) =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> (k === blanks.<span class="property">length</span>) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">const</span> [i, j] = blanks[k];</span><br><span class="line">        <span class="keyword">const</span> bi = ~~(i / <span class="number">3</span>), bj = ~~(j / <span class="number">3</span>);</span><br><span class="line">        <span class="keyword">const</span> used = rows[i] | cols[j] | blocks[bi][bj];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> x = <span class="number">1</span>; x &lt;= <span class="number">9</span>; x++) &#123;</span><br><span class="line">            <span class="keyword">const</span> mask = <span class="number">1</span> &lt;&lt; (x - <span class="number">1</span>);</span><br><span class="line">            <span class="keyword">if</span> (used &amp; mask) <span class="keyword">continue</span>;</span><br><span class="line">            board[i][j] = <span class="string">`<span class="subst">$&#123;x&#125;</span>`</span>;</span><br><span class="line">            rows[i] |= mask;</span><br><span class="line">            cols[j] |= mask;</span><br><span class="line">            blocks[bi][bj] |= mask;</span><br><span class="line">            <span class="keyword">if</span> (<span class="title function_">dfs</span>(k + <span class="number">1</span>)) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            board[i][j] = <span class="string">&quot;.&quot;</span>;</span><br><span class="line">            rows[i] ^= mask;</span><br><span class="line">            cols[j] ^= mask;</span><br><span class="line">            blocks[bi][bj] ^= mask;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="title function_">dfs</span>(<span class="number">0</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h1 id="总结：回溯算法"><a href="#总结：回溯算法" class="headerlink" title="总结：回溯算法"></a>总结：回溯算法</h1><p>回溯是递归的副产品，只要有递归就会有回溯，所以回溯法也经常和二叉树遍历，深度优先搜索混在一起，因为这两种方式都是用了递归。</p>
+<p>优化回溯算法只有剪枝一种方法。</p>
+<article class="message is-primary">
+        <div class="message-header"><p>回溯经典题型复杂度分析</p>
+</div>
+        <div class="message-body">
+            <p>子集问题分析:</p>
+<ul>
+<li><p><strong>时间复杂度</strong>：<code>O(2ⁿ)</code>
+每个元素有“取”与“不取”两种状态，组合总数为 <code>2ⁿ</code>。</p>
+</li>
+<li><p><strong>空间复杂度</strong>：<code>O(n)</code>
+递归深度为 <code>n</code>，栈空间为 <code>O(n)</code>，每层额外开销为常数级。</p>
+</li>
+</ul>
+<p>排列问题分析:</p>
+<ul>
+<li><p><strong>时间复杂度</strong>：<code>O(n!)</code>
+每一层有 <code>n</code> 个分支，下一层为 <code>n-1</code>，依此类推，共 <code>n!</code> 种排列。</p>
+</li>
+<li><p><strong>空间复杂度</strong>：<code>O(n)</code>
+递归深度为 <code>n</code>，系统栈使用 <code>O(n)</code> 空间。</p>
+</li>
+</ul>
+<p>组合问题分析:</p>
+<ul>
+<li><p><strong>时间复杂度</strong>：<code>O(2ⁿ)</code>
+属于子集问题的变形，最坏情况下为 <code>2ⁿ</code>。</p>
+</li>
+<li><p><strong>空间复杂度</strong>：<code>O(n)</code>
+递归深度为 <code>n</code>，其他开销为常数级。</p>
+</li>
+</ul>
+<p>N 皇后问题分析:</p>
+<ul>
+<li><p><strong>时间复杂度</strong>：<code>O(n!)</code>
+表面上看是 <code>O(nⁿ)</code>，但因剪枝优化，最坏情况下为 <code>n!</code>。</p>
+</li>
+<li><p><strong>空间复杂度</strong>：<code>O(n)</code>
+递归深度为 <code>n</code>，仅需记录当前皇后摆放状态。</p>
+</li>
+</ul>
+<p>解数独问题分析:</p>
+<ul>
+<li><p><strong>时间复杂度</strong>：<code>O(9^m)</code>
+<code>m</code> 是空格（’.’）的数量，每个位置最多尝试 <code>9</code> 种数字。</p>
+</li>
+<li><p><strong>空间复杂度</strong>：<code>O(n²)</code>
+最多递归 <code>n²</code> 层（即 <code>81</code>），每次调用只处理一个空格。</p>
+</li>
+</ul>
+
+        </div>
+    </article>
+</div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/Hierholzer-%E7%AE%97%E6%B3%95/">Hierholzer 算法</a><a class="link-muted mr-2" rel="tag" href="/tags/%E6%AC%A7%E6%8B%89%E8%B7%AF%E5%BE%84/">欧拉路径</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/%E7%AE%97%E6%B3%95%E9%9A%8F%E6%83%B3%E5%BD%95/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/%E4%BB%A3%E7%A0%81%E9%9A%8F%E6%83%B3%E5%BD%95%E7%AE%97%E6%B3%95%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC27%E5%A4%A9%EF%BD%9C%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95part01/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">代码随想录算法训练营第27天｜贪心算法Part01</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/%E7%AE%97%E6%B3%95%E9%9A%8F%E6%83%B3%E5%BD%95/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/%E4%BB%A3%E7%A0%81%E9%9A%8F%E6%83%B3%E5%BD%95%E7%AE%97%E6%B3%95%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC24%E5%A4%A9%EF%BD%9C%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95part03/"><span class="level-item">代码随想录算法训练营第24天｜回溯算法Part03</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><!--!--></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1 is-sticky"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="/img/H1rk.png" alt="H1rk"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">H1rk</p><p class="is-size-6 is-block">Web Developer</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>夜之城</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">40</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">13</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">19</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/hiiiroko" target="_blank" rel="me noopener">关注我</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Github" href="https://github.com/hiiiroko">Github</a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="LeetCode" href="https://leetcode.cn/u/tender-boumaniz5">LeetCode</a></div></div></div><!--!--><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/Guides/"><span class="level-start"><span class="level-item">Guides</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li><li><a class="level is-mobile" href="/categories/Plugins/"><span class="level-start"><span class="level-item">Plugins</span></span><span class="level-end"><span class="level-item tag">6</span></span></a></li><li><a class="level is-mobile" href="/categories/Widgets/"><span class="level-start"><span class="level-item">Widgets</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E4%BB%A3%E7%A0%81%E5%BF%83%E5%BE%97/"><span class="level-start"><span class="level-item">代码心得</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/%E7%AE%97%E6%B3%95%E9%9A%8F%E6%83%B3%E5%BD%95/"><span class="level-start"><span class="level-item">算法随想录</span></span><span class="level-end"><span class="level-item tag">20</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E7%AE%97%E6%B3%95%E9%9A%8F%E6%83%B3%E5%BD%95/%E4%BA%8C%E5%8F%89%E6%A0%91/"><span class="level-start"><span class="level-item">二叉树</span></span><span class="level-end"><span class="level-item tag">5</span></span></a></li><li><a class="level is-mobile" href="/categories/%E7%AE%97%E6%B3%95%E9%9A%8F%E6%83%B3%E5%BD%95/%E5%93%88%E5%B8%8C%E8%A1%A8/"><span class="level-start"><span class="level-item">哈希表</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E7%AE%97%E6%B3%95%E9%9A%8F%E6%83%B3%E5%BD%95/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/"><span class="level-start"><span class="level-item">回溯算法</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/%E7%AE%97%E6%B3%95%E9%9A%8F%E6%83%B3%E5%BD%95/%E5%AD%97%E7%AC%A6%E4%B8%B2/"><span class="level-start"><span class="level-item">字符串</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E7%AE%97%E6%B3%95%E9%9A%8F%E6%83%B3%E5%BD%95/%E6%95%B0%E7%BB%84/"><span class="level-start"><span class="level-item">数组</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E7%AE%97%E6%B3%95%E9%9A%8F%E6%83%B3%E5%BD%95/%E6%A0%88%E4%B8%8E%E9%98%9F%E5%88%97/"><span class="level-start"><span class="level-item">栈与队列</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E7%AE%97%E6%B3%95%E9%9A%8F%E6%83%B3%E5%BD%95/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/"><span class="level-start"><span class="level-item">贪心算法</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E7%AE%97%E6%B3%95%E9%9A%8F%E6%83%B3%E5%BD%95/%E9%93%BE%E8%A1%A8/"><span class="level-start"><span class="level-item">链表</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li></ul></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/BFS/"><span class="tag">BFS</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/DFS/"><span class="tag">DFS</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Hierholzer-%E7%AE%97%E6%B3%95/"><span class="tag">Hierholzer 算法</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/JavaScript/"><span class="tag">JavaScript</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/KMP/"><span class="tag">KMP</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Node-js/"><span class="tag">Node.js</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/sort/"><span class="tag">sort()</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/"><span class="tag">二分查找</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91/"><span class="tag">二叉搜索树</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97/"><span class="tag">优先队列</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%89%8D%E7%BC%80%E5%92%8C/"><span class="tag">前缀和</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/"><span class="tag">动态规划</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%8D%95%E8%B0%83%E9%98%9F%E5%88%97/"><span class="tag">单调队列</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%93%88%E5%B8%8C%E7%A2%B0%E6%92%9E/"><span class="tag">哈希碰撞</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%A0%86/"><span class="tag">堆</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%AC%A7%E6%8B%89%E8%B7%AF%E5%BE%84/"><span class="tag">欧拉路径</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/"><span class="tag">滑动窗口</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%B1%BB/"><span class="tag">类</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%B0%E5%BF%86%E5%8C%96%E6%90%9C%E7%B4%A2/"><span class="tag">记忆化搜索</span><span class="tag">1</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/2H.png" alt="hiiiroko&#039;s Blog" height="28"></a><p class="is-size-7"><span>&copy; 2025 H1rk</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Discuss on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus/discussions"><i class="fas fa-comments"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script data-pjax src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script data-pjax src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><div id="outdated"><h6>Your browser is out-of-date!</h6><p>Update your browser to view this website correctly.&amp;npsb;<a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p><p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">×</a></p></div><script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script><script>window.addEventListener("load", function () {
+            outdatedBrowser({
+                bgColor: '#f25648',
+                color: '#ffffff',
+                lowerThan: 'object-fit' // display on IE11 or below
+            });
+        });</script><!--!--><!--!--><!--!--><script data-pjax src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>
